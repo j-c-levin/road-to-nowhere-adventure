@@ -1,0 +1,29 @@
+{
+  "name": "functions",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "firebase serve --only functions"
+  },
+  "keywords": [],
+  "author": "“holition” <“admin@holition.com”> (“http://www.holition.com)",
+  "license": "ISC",
+  "dependencies": {
+    "actions-on-google": "^1.0.0",
+    "deep-freeze": "0.0.1",
+    "firebase": "^4.5.0",
+    "firebase-admin": "^5.4.2",
+    "firebase-functions": "^0.7.0",
+    "firebase-tools": "^3.13.1"
+  },
+  "devDependencies": {
+    "eslint": "^3.19.0",
+    "eslint-config-semistandard": "^11.0.0",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-import": "^2.3.0",
+    "eslint-plugin-node": "^5.0.0",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-standard": "^3.0.1"
+  }
+}
