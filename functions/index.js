@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const ApiAiApp = require("actions-on-google");
+const ActionsOnGoogle = require("actions-on-google");
 const functions = require("firebase-functions");
 const index_1 = require("./nodes/index");
 const player = {
@@ -8,6 +8,7 @@ const player = {
     weapons: 0,
     tools: 0
 };
+const DialogFlowApp = ActionsOnGoogle.DialogflowApp;
 let currentConnections;
 const getRandomValue = array => array[Math.floor(Math.random() * array.length)];
 const unhandledDeepLinks = app => {
@@ -39,7 +40,8 @@ actionMap.set(Actions.UNRECOGNIZED_DEEP_LINK, unhandledDeepLinks);
 actionMap.set(Actions.TEST, test);
 actionMap.set(Actions.BEGIN, begin);
 const handleAdventure = functions.https.onRequest((request, response) => {
-    const app = new ApiAiApp({ request, response });
+    console.log(DialogFlowApp);
+    const app = new DialogFlowApp({ request, response });
     console.log(`Request headers: ${JSON.stringify(request.headers)}\n\n`);
     console.log(`Request body: ${JSON.stringify(request.body)}`);
     app.handleRequest(actionMap);

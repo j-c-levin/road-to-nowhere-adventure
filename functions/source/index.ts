@@ -1,4 +1,4 @@
-import * as ApiAiApp from 'actions-on-google';
+import ActionsOnGoogle  = require('actions-on-google');
 import * as functions from 'firebase-functions';
 import { nodes, Node } from './nodes/index';
 
@@ -14,6 +14,7 @@ const player: Player = {
     tools: 0
 };
 
+const DialogFlowApp = ActionsOnGoogle.DialogflowApp;
 let currentConnections: Node;
 
 const getRandomValue = array => array[Math.floor(Math.random() * array.length)];
@@ -55,7 +56,8 @@ actionMap.set(Actions.TEST, test);
 actionMap.set(Actions.BEGIN, begin);
 
 const handleAdventure = functions.https.onRequest((request, response) => {
-    const app = new ApiAiApp({ request, response });
+    console.log(DialogFlowApp);
+    const app = new DialogFlowApp({ request, response });
     console.log(`Request headers: ${JSON.stringify(request.headers)}\n\n`);
     console.log(`Request body: ${JSON.stringify(request.body)}`);
     app.handleRequest(actionMap);
