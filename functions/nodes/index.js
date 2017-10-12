@@ -1,6 +1,7 @@
-'use strict';
-const nodes = [
-    require('./1.1')
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const index_1 = require("./0.0/index");
+exports.nodes = [
+    index_1.node
 ];
-
-module.exports = nodes;
+//# sourceMappingURL=index.js.map

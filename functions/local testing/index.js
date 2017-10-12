@@ -1,3 +1,3 @@
-const adventure = require('../index');
+const adventure = require('../dist/index');
 
 adventure.testing();
