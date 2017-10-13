@@ -2,14 +2,15 @@ import { main } from './function';
 import { Node, Distance } from '../index';
 
 export const node: Node = {
-    id: '0',
-    name: 'The Road to Nowhere',
+    id: '1.1',
+    // You stand at...
+    name: 'an abandoned campsite',
     data: {},
     function: main,
     paths: {
         north: {
-            id: '1.1',
-            distance: Distance.Short
+            id: undefined,
+            distance: undefined
         },
         east: {
             id: undefined,

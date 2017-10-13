@@ -1,17 +1,26 @@
-import ActionsOnGoogle  = require('actions-on-google');
+import ActionsOnGoogle = require('actions-on-google');
 import * as functions from 'firebase-functions';
-import { nodes, Node } from './nodes/index';
+import { nodes, Node, GetRemoteNode, GetDistanceAsString, PathObject } from './nodes/index';
+
+enum ToolType {
+    Weapon,
+    Equipment,
+    Special
+}
+
+interface Tool {
+    name: string;
+    type: ToolType;
+}
 
 interface Player {
     food: number;
-    weapons: number;
-    tools: number;
+    tools: Array<Tool>;
 }
 
 const player: Player = {
     food: 5,
-    weapons: 0,
-    tools: 0
+    tools: []
 };
 
 const DialogFlowApp = ActionsOnGoogle.DialogflowApp;
@@ -27,21 +36,46 @@ const test = app => {
     app.tell('Well, you made your test work. Good job hero.');
 };
 
-const generatePlayerStatus = () => {
-    return `\nYou have ${player.food} food rations, ${player.weapons} weapons and ${player.tools} tools.`;
+const generatePlayerStatus = (): string => {
+    let message = `\n`;
+    message += `You have ${player.food} food rations`;
+    player.tools.forEach((tool) => {
+        message += ',';
+        message += ` a ${tool.name}`;
+    });
+    message += '.';
+    return message;
 };
 
 const begin = (app): void => {
-    let message = `\nYour journey begins.${generatePlayerStatus()}`;
     currentConnections = nodes[0];
+    let message = `\nYour journey begins.\n`;
+    message += generateLocationMessage();
+    message += generatePlayerStatus();
     message += '\n';
     message += 'Where will you journey?';
     console.log(message);
     app.ask(message);
 };
 
-const generateLocationMessage = (): void => {
-
+const generateLocationMessage = (): string => {
+    let message = 'You stand at';
+    message += ' ';
+    message += `${currentConnections.name},`;
+    message += ' ';
+    message += currentConnections.function().description;
+    message += ' ';
+    Object.keys(currentConnections.paths).forEach((direction: string) => {
+        if (typeof currentConnections.paths[direction] === 'undefined') {
+            return;
+        }
+        const path: PathObject = currentConnections.paths[direction];
+        const node: Node = GetRemoteNode(path.id);
+        const distance: string = GetDistanceAsString(currentConnections.paths[direction]);
+        message += '\n';
+        message += `To the east, a ${distance} away, ${node.function().observableDescription}`;
+    });
+    return message;
 };
 
 const Actions = {
