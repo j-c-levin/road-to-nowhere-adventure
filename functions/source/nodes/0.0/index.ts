@@ -9,7 +9,7 @@ export const node: Node = {
     paths: {
         north: {
             id: '1.1',
-            distance: Distance.Short
+            distance: 1
         },
         east: {
             id: undefined,

@@ -22,4 +22,3 @@ exports.node = {
         }
     }
 };
-//# sourceMappingURL=index.js.map

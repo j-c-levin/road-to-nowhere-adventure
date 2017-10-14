@@ -10,4 +10,3 @@ function main(requestingNode) {
     return response;
 }
 exports.main = main;
-//# sourceMappingURL=function.js.map

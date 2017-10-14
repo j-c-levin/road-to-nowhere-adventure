@@ -1,6 +1,6 @@
 import ActionsOnGoogle = require('actions-on-google');
 import * as functions from 'firebase-functions';
-import { nodes, Node, GetRemoteNode, GetDistanceAsString, PathObject } from './nodes/index';
+import { nodes, Node, GetRemoteNode, GetDistanceAsString, PathObject, Distance } from './nodes/index';
 
 enum ToolType {
     Weapon,
@@ -66,14 +66,14 @@ const generateLocationMessage = (): string => {
     message += currentConnections.function().description;
     message += ' ';
     Object.keys(currentConnections.paths).forEach((direction: string) => {
-        if (typeof currentConnections.paths[direction] === 'undefined') {
+        if (typeof currentConnections.paths[direction].id === 'undefined') {
             return;
         }
         const path: PathObject = currentConnections.paths[direction];
         const node: Node = GetRemoteNode(path.id);
-        const distance: string = GetDistanceAsString(currentConnections.paths[direction]);
+        const distance: string = GetDistanceAsString(currentConnections.paths[direction].distance);
         message += '\n';
-        message += `To the east, a ${distance} away, ${node.function().observableDescription}`;
+        message += `To the ${direction}, a ${distance} away, ${node.function().observableDescription}`;
     });
     return message;
 };

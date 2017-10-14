@@ -8,7 +8,6 @@ exports.Distance = {
     Moderate: 3,
     Significant: 4
 };
-console.log("called");
 function GetRemoteNode(nodeId) {
     if (typeof nodeId === 'undefined') {
         console.error('Cannot get undefined remote node');
@@ -45,4 +44,3 @@ exports.nodes = [
     index_1.node,
     index_2.node
 ];
-//# sourceMappingURL=index.js.map

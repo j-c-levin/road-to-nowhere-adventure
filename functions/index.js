@@ -50,14 +50,14 @@ const generateLocationMessage = () => {
     message += currentConnections.function().description;
     message += ' ';
     Object.keys(currentConnections.paths).forEach((direction) => {
-        if (typeof currentConnections.paths[direction] === 'undefined') {
+        if (typeof currentConnections.paths[direction].id === 'undefined') {
             return;
         }
         const path = currentConnections.paths[direction];
         const node = index_1.GetRemoteNode(path.id);
-        const distance = index_1.GetDistanceAsString(currentConnections.paths[direction]);
+        const distance = index_1.GetDistanceAsString(currentConnections.paths[direction].distance);
         message += '\n';
-        message += `To the east, a ${distance} away, ${node.function().observableDescription}`;
+        message += `To the ${direction}, a ${distance} away, ${node.function().observableDescription}`;
     });
     return message;
 };
@@ -84,4 +84,3 @@ module.exports = {
     handleAdventure,
     testing
 };
-//# sourceMappingURL=index.js.map

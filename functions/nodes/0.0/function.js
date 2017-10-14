@@ -8,4 +8,3 @@ function main() {
     return response;
 }
 exports.main = main;
-//# sourceMappingURL=function.js.map
