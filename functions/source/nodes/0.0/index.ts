@@ -3,7 +3,7 @@ import { Node, Distance } from '../index';
 
 export const node: Node = {
     id: '0',
-    name: 'The Road to Nowhere',
+    name: 'Road to Nowhere',
     data: {},
     function: main,
     paths: {

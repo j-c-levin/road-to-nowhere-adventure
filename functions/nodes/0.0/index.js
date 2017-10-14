@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const function_1 = require("./function");
 exports.node = {
     id: '0',
-    name: 'The Road to Nowhere',
+    name: 'Road to Nowhere',
     data: {},
     function: function_1.main,
     paths: {

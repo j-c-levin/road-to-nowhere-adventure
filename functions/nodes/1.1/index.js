@@ -3,9 +3,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const function_1 = require("./function");
 exports.node = {
     id: '1.1',
-    // You stand at...
-    name: 'an abandoned campsite',
-    data: {},
+    // You stand at the...
+    name: 'abandoned campsite',
+    data: {
+        hasLooted: false
+    },
     function: function_1.main,
     paths: {
         north: {

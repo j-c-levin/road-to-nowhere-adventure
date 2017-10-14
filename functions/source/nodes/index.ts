@@ -5,8 +5,8 @@ import { node as node11 } from './1.1/index';
 export interface Node {
     id: string;
     name: string;
-    data: object;
-    function(): NodeData;
+    data: any;
+    function(requestingNode: Node): NodeData;
     paths: Paths;
 }
 
@@ -24,6 +24,7 @@ export interface PathObject {
 export interface NodeData {
     description: string;
     observableDescription: string;
+    interact(requestingNode: Node): NodeData | void;
 }
 
 export interface DistanceType {

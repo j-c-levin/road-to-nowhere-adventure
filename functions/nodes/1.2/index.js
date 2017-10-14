@@ -1,14 +1,12 @@
-import { main } from './function';
-import { Node, Distance } from '../index';
-
-export const node: Node = {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const function_1 = require("./function");
+exports.node = {
     id: '1.1',
     // You stand at the...
     name: 'abandoned campsite',
-    data: {
-        hasLooted: false
-    },
-    function: main,
+    data: {},
+    function: function_1.main,
     paths: {
         north: {
             id: undefined,

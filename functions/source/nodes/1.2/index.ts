@@ -5,9 +5,7 @@ export const node: Node = {
     id: '1.1',
     // You stand at the...
     name: 'abandoned campsite',
-    data: {
-        hasLooted: false
-    },
+    data: {},
     function: main,
     paths: {
         north: {
