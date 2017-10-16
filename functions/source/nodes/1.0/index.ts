@@ -2,11 +2,11 @@ import { main, interact } from './function';
 import { Node, Distance } from '../index';
 
 export const node: Node = {
-    id: '1.1',
+    id: '1.0',
     // You stand at the...
-    name: 'abandoned campsite',
+    name: 'river bank',
     data: {
-        scavenged: false
+        isFlooded: true
     },
     function: main,
     interaction: interact,
@@ -16,12 +16,12 @@ export const node: Node = {
             distance: undefined
         },
         east: {
-            id: '1.2',
+            id: '1.1',
             distance: 1
         },
         west: {
-            id: '1.0',
-            distance: 1
+            id: undefined,
+            distance: undefined
         }
     }
 };

@@ -1,12 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const index_1 = require("./../index");
 function main(requestingNode) {
     const response = {
-        // You stand at the Road to nowhere,...
-        description: 'a campsite abandoned in a hurry.  Most of the tents have been emptied but a few unopened boxes and crates remain.',
-        // To the north,...
-        observableDescription: 'a path towards mountain range there appears to be the remains of a campsite.'
+        // You stand at the [place], ...
+        description: 'abandoned to the elements. The keys are in the ignition but nothing responds when they are turned.',
+        // To the north, ...
+        observableDescription: 'some kind of vehicle stands apart'
     };
     return response;
 }
 exports.main = main;
+function interact(interaction) {
+    return index_1.DefaultInteraction;
+}
+exports.interact = interact;

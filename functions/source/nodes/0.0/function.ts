@@ -1,4 +1,4 @@
-import { NodeData } from './../index';
+import { NodeData, Interaction, InteractionType, InteractionResponse, DefaultInteraction, InteractionData } from './../index';
 
 export function main(): NodeData {
     const response = {
@@ -6,4 +6,8 @@ export function main(): NodeData {
         observableDescription: 'a place where everything is Away, and nothing Behind.  There is no going back.'
     };
     return response;
+}
+
+export function interact(Interaction: InteractionData): InteractionResponse {
+    return DefaultInteraction;
 }

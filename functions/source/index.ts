@@ -1,29 +1,29 @@
+import { Player } from './index';
 import ActionsOnGoogle = require('actions-on-google');
 const DialogFlowApp = ActionsOnGoogle.DialogflowApp;
 import * as functions from 'firebase-functions';
-import { nodes, Node, GetRemoteNode, GetDistanceAsString, PathObject, Distance } from './nodes/index';
+import { nodes, Node, GetRemoteNode, GetDistanceAsString, PathObject, Distance, GetInteractionAsEnum, InteractionData } from './nodes/index';
 
-enum ToolType {
-    Weapon,
-    Equipment,
-    Special
+export enum ToolType {
+    Build
 }
 
-interface Tool {
+export interface Tool {
     name: string;
     type: ToolType;
 }
 
-interface Player {
+export interface Player {
     food: number;
     tools: Array<Tool>;
 }
 
 const player: Player = {
-    food: 5,
+    food: 2,
     tools: []
 };
 
+const startingNode = '2.3';
 let currentNode: Node;
 
 const getRandomValue = array => array[Math.floor(Math.random() * array.length)];
@@ -68,7 +68,7 @@ const generatePlayerStatus = (): string => {
 };
 
 const begin = (app): void => {
-    currentNode = nodes[0];
+    currentNode = GetRemoteNode(startingNode);
     let message = `\nYour journey begins.\n`;
     message += locationMessage();
     app.ask(message);
@@ -83,23 +83,44 @@ const locationMessage = (): string => {
 };
 
 const handleJourneyDirection = (app): void => {
-    const direction = app.getContext('journey-direction').parameters['journey-direction'];
+    const direction = app.getContext('journey-active').parameters['journey-direction'];
     if (direction === 'south') {
         app.ask('There is no going back.');
     } else if (typeof currentNode.paths[direction].id === 'undefined') {
         app.ask('There is nothing to go to in that direction.');
     } else {
-        player.food - currentNode.paths[direction].distance;
+        player.food -= currentNode.paths[direction].distance;
         currentNode = GetRemoteNode(currentNode.paths[direction].id);
         app.ask(locationMessage());
     }
+};
+
+const handleInteraction = (app): void => {
+    const interaction = app.getContext('journey-active').parameters['journey-interaction'];
+    const interactionData: InteractionData = {
+        interactionType: GetInteractionAsEnum(interaction),
+        requestingNode: currentNode,
+        player: this.player
+    };
+    const interactionResponse = currentNode.interaction(interactionData);
+    // Augment the player with whatever the interaction achieved
+    Object.keys(interactionResponse.data).forEach((element) => {
+        if (element !== ' tool') {
+            player[element] += interactionResponse.data[element];
+        } else {
+            player[element].push(interactionResponse.data[element]);
+        }
+    });
+    const message = interactionResponse.message;
+    app.ask(message);
 };
 
 const Actions = {
     UNRECOGNIZED_DEEP_LINK: 'deeplink.unknown',
     TEST: 'action.test',
     BEGIN: 'road.begin',
-    DIRECTION: 'road.direction'
+    DIRECTION: 'road.direction',
+    SEARCH: 'road.interaction'
 };
 
 const actionMap = new Map();
@@ -107,6 +128,7 @@ actionMap.set(Actions.UNRECOGNIZED_DEEP_LINK, unhandledDeepLinks);
 actionMap.set(Actions.TEST, test);
 actionMap.set(Actions.BEGIN, begin);
 actionMap.set(Actions.DIRECTION, handleJourneyDirection);
+actionMap.set(Actions.SEARCH, handleInteraction);
 
 const handleAdventure = functions.https.onRequest((request, response) => {
     const app = new DialogFlowApp({ request, response });

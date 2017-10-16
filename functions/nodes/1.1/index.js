@@ -6,21 +6,22 @@ exports.node = {
     // You stand at the...
     name: 'abandoned campsite',
     data: {
-        hasLooted: false
+        scavenged: false
     },
     function: function_1.main,
+    interaction: function_1.interact,
     paths: {
         north: {
             id: undefined,
             distance: undefined
         },
         east: {
-            id: undefined,
-            distance: undefined
+            id: '1.2',
+            distance: 1
         },
         west: {
-            id: undefined,
-            distance: undefined
+            id: '1.0',
+            distance: 1
         }
     }
 };

@@ -1,11 +1,12 @@
-import { main } from './function';
+import { main, interact } from './function';
 import { Node, Distance } from '../index';
 
 export const node: Node = {
-    id: '0',
+    id: '0.0',
     name: 'Road to Nowhere',
     data: {},
     function: main,
+    interaction: interact,
     paths: {
         north: {
             id: '1.1',

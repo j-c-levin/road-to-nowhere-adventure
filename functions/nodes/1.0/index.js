@@ -2,24 +2,26 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const function_1 = require("./function");
 exports.node = {
-    id: '1.2',
+    id: '1.0',
     // You stand at the...
-    name: 'dusty car',
-    data: {},
+    name: 'river bank',
+    data: {
+        isFlooded: true
+    },
     function: function_1.main,
     interaction: function_1.interact,
     paths: {
         north: {
-            id: '2.3',
-            distance: 1
-        },
-        east: {
             id: undefined,
             distance: undefined
         },
-        west: {
+        east: {
             id: '1.1',
             distance: 1
+        },
+        west: {
+            id: undefined,
+            distance: undefined
         }
     }
 };

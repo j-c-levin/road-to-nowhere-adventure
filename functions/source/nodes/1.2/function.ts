@@ -1,11 +1,16 @@
-import { NodeData, Distance } from './../index';
+import { Node, NodeData, Distance, InteractionType, InteractionResponse, Interaction, DefaultInteraction, InteractionData } from './../index';
 
-export function main(requestingNode?: Node): NodeData {
+
+export function main(requestingNode: Node): NodeData {
     const response = {
-        // You stand at the Road to nowhere,...
-        description: 'a campsite abandoned in a hurry.  Most of the tents have been emptied but a few unopened boxes and crates remain.',
-        // To the north,...
-        observableDescription: 'a path towards mountain range there appears to be the remains of a campsite.'
+        // You stand at the [place], ...
+        description: 'abandoned to the elements. The keys are in the ignition but nothing responds when they are turned.',
+        // To the north, ...
+        observableDescription: 'some kind of vehicle stands apart'
     };
     return response;
+}
+
+export function interact(interaction: InteractionData): InteractionResponse {
+    return DefaultInteraction;
 }

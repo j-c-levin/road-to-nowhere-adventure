@@ -1,21 +1,38 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const itemsExistDescription = 'a campsite abandoned in a hurry.  Most of the tents have been emptied but a few unopened boxes and crates remain.';
-const noItemsDescription = 'a campsite abandoned in a hurry.  It has already been looted';
+const index_1 = require("./../index");
+const itemsExistDescription = 'a campsite abandoned in a hurry.  Most of the tents have been emptied but there are a few supply boxes around';
+const noItemsDescription = 'a campsite abandoned in a hurry.  It has already been scavenged';
+const numberOfFoodRations = 2;
 function main(requestingNode) {
     const response = {
         // You stand at the Road to nowhere,...
         description: generateDescription(requestingNode),
         // To the north,...
-        observableDescription: 'a path towards mountain range there appears to be the remains of a campsite.',
-        interact: this.interact
+        observableDescription: 'a path towards a mountain range, there appears to be the remains of a campsite.'
     };
     return response;
 }
 exports.main = main;
 const generateDescription = (requestingNode) => {
-    return (requestingNode.data.hasLooted === false) ? itemsExistDescription : noItemsDescription;
+    return (requestingNode.data.scavenged === false) ? itemsExistDescription : noItemsDescription;
 };
-const interact = (requestingNode) => {
-    // if ()
-};
+function interact(interaction) {
+    let response;
+    switch (interaction.interactionType) {
+        case index_1.Interaction.Search:
+            response = {
+                message: `You find ${numberOfFoodRations} food supplies.`,
+                data: {
+                    food: numberOfFoodRations
+                }
+            };
+            interaction.requestingNode.data.scavenged = true;
+            break;
+        default:
+            response = index_1.DefaultInteraction;
+            break;
+    }
+    return response;
+}
+exports.interact = interact;

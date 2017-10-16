@@ -6,14 +6,13 @@ const functions = require("firebase-functions");
 const index_1 = require("./nodes/index");
 var ToolType;
 (function (ToolType) {
-    ToolType[ToolType["Weapon"] = 0] = "Weapon";
-    ToolType[ToolType["Equipment"] = 1] = "Equipment";
-    ToolType[ToolType["Special"] = 2] = "Special";
-})(ToolType || (ToolType = {}));
+    ToolType[ToolType["Build"] = 0] = "Build";
+})(ToolType = exports.ToolType || (exports.ToolType = {}));
 const player = {
-    food: 5,
+    food: 2,
     tools: []
 };
+const startingNode = '2.3';
 let currentNode;
 const getRandomValue = array => array[Math.floor(Math.random() * array.length)];
 const unhandledDeepLinks = app => {
@@ -52,7 +51,7 @@ const generatePlayerStatus = () => {
     return message;
 };
 const begin = (app) => {
-    currentNode = index_1.nodes[0];
+    currentNode = index_1.GetRemoteNode(startingNode);
     let message = `\nYour journey begins.\n`;
     message += locationMessage();
     app.ask(message);
@@ -65,7 +64,7 @@ const locationMessage = () => {
     return message;
 };
 const handleJourneyDirection = (app) => {
-    const direction = app.getContext('journey-direction').parameters['journey-direction'];
+    const direction = app.getContext('journey-active').parameters['journey-direction'];
     if (direction === 'south') {
         app.ask('There is no going back.');
     }
@@ -73,22 +72,44 @@ const handleJourneyDirection = (app) => {
         app.ask('There is nothing to go to in that direction.');
     }
     else {
-        player.food - currentNode.paths[direction].distance;
+        player.food -= currentNode.paths[direction].distance;
         currentNode = index_1.GetRemoteNode(currentNode.paths[direction].id);
         app.ask(locationMessage());
     }
+};
+const handleInteraction = (app) => {
+    const interaction = app.getContext('journey-active').parameters['journey-interaction'];
+    const interactionData = {
+        interactionType: index_1.GetInteractionAsEnum(interaction),
+        requestingNode: currentNode,
+        player: this.player
+    };
+    const interactionResponse = currentNode.interaction(interactionData);
+    // Augment the player with whatever the interaction achieved
+    Object.keys(interactionResponse.data).forEach((element) => {
+        if (element !== ' tool') {
+            player[element] += interactionResponse.data[element];
+        }
+        else {
+            player[element].push(interactionResponse.data[element]);
+        }
+    });
+    const message = interactionResponse.message;
+    app.ask(message);
 };
 const Actions = {
     UNRECOGNIZED_DEEP_LINK: 'deeplink.unknown',
     TEST: 'action.test',
     BEGIN: 'road.begin',
-    DIRECTION: 'road.direction'
+    DIRECTION: 'road.direction',
+    SEARCH: 'road.interaction'
 };
 const actionMap = new Map();
 actionMap.set(Actions.UNRECOGNIZED_DEEP_LINK, unhandledDeepLinks);
 actionMap.set(Actions.TEST, test);
 actionMap.set(Actions.BEGIN, begin);
 actionMap.set(Actions.DIRECTION, handleJourneyDirection);
+actionMap.set(Actions.SEARCH, handleInteraction);
 const handleAdventure = functions.https.onRequest((request, response) => {
     const app = new DialogFlowApp({ request, response });
     // console.log(`Request headers: ${JSON.stringify(request.headers)}\n\n`);

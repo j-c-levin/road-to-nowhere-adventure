@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const index_1 = require("./../index");
 function main() {
     const response = {
         description: 'a barren plain with a single path leading Away.',
@@ -8,3 +9,7 @@ function main() {
     return response;
 }
 exports.main = main;
+function interact(Interaction) {
+    return index_1.DefaultInteraction;
+}
+exports.interact = interact;

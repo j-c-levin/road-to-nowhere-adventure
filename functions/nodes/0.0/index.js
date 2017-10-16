@@ -2,10 +2,11 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const function_1 = require("./function");
 exports.node = {
-    id: '0',
+    id: '0.0',
     name: 'Road to Nowhere',
     data: {},
     function: function_1.main,
+    interaction: function_1.interact,
     paths: {
         north: {
             id: '1.1',
