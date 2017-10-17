@@ -5,9 +5,7 @@ export const node: Node = {
     id: '2.2',
     // You stand at the...
     name: 'dam',
-    data: {
-        isFixed: false
-    },
+    data: {},
     function: main,
     interaction: interact,
     paths: {

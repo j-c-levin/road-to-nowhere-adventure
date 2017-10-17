@@ -8,18 +8,37 @@ export function main(requestingNode: Node): NodeData {
         // You stand at the [place], ...
         description: 'it has been partially destroyed and water freely gushes down into the river.',
         // To the north, ...
-        observableDescription: 'a hill at the top from which there is a sound a bit like rushing water.'
+        observableDescription: 'a hill with the house of rushing water.'
     };
     return response;
 }
 
 export function interact(interaction: InteractionData): InteractionResponse {
+    if (GetRemoteNode(floodedNode).data.isFlooded === false) {
+        return DefaultInteraction;
+    }
     let response: InteractionResponse;
     switch (interaction.interactionType) {
         case Interaction.Build:
+            // Check the player has wood to repair the dam
+            const hasBuildingTool = interaction.player.tools.some((tool) => {
+                return tool.type === ToolType.Build;
+            });
+            if (hasBuildingTool === false) {
+                return {
+                    message: 'You have no material to fix the dam with.',
+                    data: {}
+                };
+            }
             response = {
                 message: buildDam(interaction),
                 data: {}
+            };
+            // Open up node 1.0
+            GetRemoteNode(floodedNode).data.isFlooded = false;
+            GetRemoteNode(floodedNode).paths.north = {
+                id: '2.1',
+                distance: 1
             };
             break;
         default:
@@ -30,20 +49,19 @@ export function interact(interaction: InteractionData): InteractionResponse {
 }
 
 function buildDam(interaction: InteractionData): string {
-    if (interaction.requestingNode.data.isFixed === true) {
-        return `There isn't any more work to be done on the dam`;
-    }
-    interaction.requestingNode.data.isFixed = true;
-    const player = interaction.player;
-    const usableTool: Tool = player.tools.filter((tool) => {
-        return tool.type === ToolType.Build;
+    const playerTools = interaction.player.tools;
+    let toolIndex = -1;
+    const usableTool: Tool = playerTools.filter((tool, index) => {
+        if (tool.type === ToolType.Build) {
+            toolIndex = index;
+            return true;
+        } else {
+            return false;
+        }
     })[0];
-    if (typeof usableTool !== 'undefined') {
+    if (toolIndex !== -1) {
         // Remove the tool from the player
-        const removeIndex: number = player.tools.findIndex((tool) => {
-            return tool === usableTool;
-        });
-        player.tools.splice(removeIndex);
+        playerTools.splice(toolIndex);
         // Un-floor the water at 1.0
         const node: Node = GetRemoteNode(floodedNode);
         node.data.isFlooded = false;

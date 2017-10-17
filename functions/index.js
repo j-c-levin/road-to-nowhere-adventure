@@ -12,7 +12,7 @@ const player = {
     food: 2,
     tools: []
 };
-const startingNode = '2.3';
+const startingNode = '2.1';
 let currentNode;
 const getRandomValue = array => array[Math.floor(Math.random() * array.length)];
 const unhandledDeepLinks = app => {
@@ -44,13 +44,15 @@ const generatePlayerStatus = () => {
     let message = `\n`;
     message += `You have ${player.food} food rations`;
     player.tools.forEach((tool) => {
-        message += ',';
-        message += ` a ${tool.name}`;
+        message += ', ';
+        message += tool.name;
     });
     message += '.';
     return message;
 };
 const begin = (app) => {
+    player.food = 2;
+    player.tools = [];
     currentNode = index_1.GetRemoteNode(startingNode);
     let message = `\nYour journey begins.\n`;
     message += locationMessage();
@@ -63,8 +65,29 @@ const locationMessage = () => {
     message += 'Where will you journey?';
     return message;
 };
+const generalStatus = (app) => {
+    app.ask(locationMessage());
+};
+const endJourney = (app) => {
+    const message = 'Out of food, your journey ends here.  However, endings are beginnings anew, will you journey again?';
+    app.ask(message);
+};
+const endOfGame = (app) => {
+    const message = `You step towards the unknown.  Maybe you'll find something.  Maybe your story will vanish without a trace.  Or maybe someone journeying along the Road to Nowhere will someday chance across a patchily repaired dam and wonder how that came to pass.  For now though, there is only Away.`;
+    app.ask(message);
+};
 const handleJourneyDirection = (app) => {
+    // Player has no food, end journey
+    if (player.food === 0) {
+        endJourney(app);
+        return;
+    }
     const direction = app.getContext('journey-active').parameters['journey-direction'];
+    // Edge case for ending the game
+    if (currentNode.id === '2.1') {
+        endOfGame(app);
+        return;
+    }
     if (direction === 'south') {
         app.ask('There is no going back.');
     }
@@ -79,15 +102,17 @@ const handleJourneyDirection = (app) => {
 };
 const handleInteraction = (app) => {
     const interaction = app.getContext('journey-active').parameters['journey-interaction'];
+    const p = player;
     const interactionData = {
         interactionType: index_1.GetInteractionAsEnum(interaction),
         requestingNode: currentNode,
-        player: this.player
+        player: p
     };
+    console.log('interaction data', interactionData);
     const interactionResponse = currentNode.interaction(interactionData);
     // Augment the player with whatever the interaction achieved
     Object.keys(interactionResponse.data).forEach((element) => {
-        if (element !== ' tool') {
+        if (element !== 'tools') {
             player[element] += interactionResponse.data[element];
         }
         else {
@@ -102,7 +127,8 @@ const Actions = {
     TEST: 'action.test',
     BEGIN: 'road.begin',
     DIRECTION: 'road.direction',
-    SEARCH: 'road.interaction'
+    SEARCH: 'road.interaction',
+    STATUS: 'road.status'
 };
 const actionMap = new Map();
 actionMap.set(Actions.UNRECOGNIZED_DEEP_LINK, unhandledDeepLinks);
@@ -110,16 +136,13 @@ actionMap.set(Actions.TEST, test);
 actionMap.set(Actions.BEGIN, begin);
 actionMap.set(Actions.DIRECTION, handleJourneyDirection);
 actionMap.set(Actions.SEARCH, handleInteraction);
+actionMap.set(Actions.STATUS, generalStatus);
 const handleAdventure = functions.https.onRequest((request, response) => {
     const app = new DialogFlowApp({ request, response });
     // console.log(`Request headers: ${JSON.stringify(request.headers)}\n\n`);
     // console.log(`Request body: ${JSON.stringify(request.body)}`);
     app.handleRequest(actionMap);
 });
-const testing = values => {
-    handleJourneyDirection(undefined);
-};
 module.exports = {
-    handleAdventure,
-    testing
+    handleAdventure
 };

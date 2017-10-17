@@ -4,15 +4,21 @@ const index_1 = require("./0.0/index");
 const index_2 = require("./1.0/index");
 const index_3 = require("./1.1/index");
 const index_4 = require("./1.2/index");
-const index_5 = require("./2.2/index");
-const index_6 = require("./2.3/index");
+const index_5 = require("./2.1/index");
+const index_6 = require("./2.2/index");
+const index_7 = require("./2.3/index");
+const index_8 = require("./2.4/index");
+const index_9 = require("./3.2/index");
 exports.nodes = [
     index_1.node,
     index_2.node,
     index_3.node,
     index_4.node,
     index_5.node,
-    index_6.node
+    index_6.node,
+    index_7.node,
+    index_8.node,
+    index_9.node
 ];
 exports.Distance = {
     Short: 1,
@@ -64,6 +70,8 @@ function GetInteractionAsEnum(interaction) {
     switch (interaction) {
         case 'search':
             return exports.Interaction.Search;
+        case 'build':
+            return exports.Interaction.Build;
         default:
             console.error(`no interaction of name ${interaction} defined`);
             return -1;

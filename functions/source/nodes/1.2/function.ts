@@ -6,7 +6,7 @@ export function main(requestingNode: Node): NodeData {
         // You stand at the [place], ...
         description: 'abandoned to the elements. The keys are in the ignition but nothing responds when they are turned.',
         // To the north, ...
-        observableDescription: 'some kind of vehicle stands apart'
+        observableDescription: 'some kind of vehicle stands apart.'
     };
     return response;
 }

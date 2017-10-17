@@ -3,14 +3,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const index_1 = require("./../index");
 const index_2 = require("../../index");
 const floodedNode = '1.0';
-const notScavengedDescription = `It's abandoned and emptied save for some pieces of chopped wood lying in the yard.`;
-const scavengedDescription = `It's abandoned and empty.`;
+const notScavengedDescription = `it's abandoned and emptied save for some pieces of chopped wood lying in the yard.`;
+const scavengedDescription = `it's abandoned and empty.`;
 function main(requestingNode) {
     const response = {
         // You stand at the [place], ...
-        description: `It's abandoned and emptied save for some pieces of chopped wood lying in the yard.`,
+        description: generateDescription(requestingNode),
         // To the north, ...
-        observableDescription: 'a hill at the top from which there is a sound a bit like rushing water.'
+        observableDescription: 'a farmhouse on the top of a hill'
     };
     return response;
 }
@@ -19,11 +19,15 @@ const generateDescription = (requestingNode) => {
     return (requestingNode.data.scavenged === false) ? notScavengedDescription : scavengedDescription;
 };
 function interact(interaction) {
+    // Ensure someone can only loot once
+    if (interaction.requestingNode.data.scavenged === true) {
+        interaction.interactionType = -1;
+    }
     let response;
     switch (interaction.interactionType) {
         case index_1.Interaction.Search:
             const tool = {
-                name: 'wood',
+                name: 'some pieces of wood',
                 type: index_2.ToolType.Build
             };
             response = {

@@ -3,8 +3,11 @@ import { node as node00 } from './0.0/index';
 import { node as node10 } from './1.0/index';
 import { node as node11 } from './1.1/index';
 import { node as node12 } from './1.2/index';
+import { node as node21 } from './2.1/index';
 import { node as node22 } from './2.2/index';
 import { node as node23 } from './2.3/index';
+import { node as node24 } from './2.4/index';
+import { node as node32 } from './3.2/index';
 import { Player } from '../index';
 
 export const nodes = [
@@ -12,8 +15,11 @@ export const nodes = [
     node10,
     node11,
     node12,
+    node21,
     node22,
-    node23
+    node23,
+    node24,
+    node32
 ];
 
 export const Distance: DistanceType = {
@@ -120,6 +126,8 @@ export function GetInteractionAsEnum(interaction: string): number {
     switch (interaction) {
         case 'search':
             return Interaction.Search;
+        case 'build':
+            return Interaction.Build;
         default:
             console.error(`no interaction of name ${interaction} defined`);
             return -1;

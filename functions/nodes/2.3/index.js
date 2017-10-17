@@ -16,8 +16,8 @@ exports.node = {
             distance: undefined
         },
         east: {
-            id: undefined,
-            distance: undefined
+            id: '2.4',
+            distance: 1
         },
         west: {
             id: '2.2',

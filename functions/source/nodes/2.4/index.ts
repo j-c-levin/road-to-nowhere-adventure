@@ -1,13 +1,13 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const function_1 = require("./function");
-exports.node = {
-    id: '2.2',
+import { main, interact } from './function';
+import { Node, Distance } from '../index';
+
+export const node: Node = {
+    id: '2.4',
     // You stand at the...
-    name: 'dam',
+    name: 'barren fields',
     data: {},
-    function: function_1.main,
-    interaction: function_1.interact,
+    function: main,
+    interaction: interact,
     paths: {
         north: {
             id: undefined,

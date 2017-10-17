@@ -2,26 +2,24 @@ import { main, interact } from './function';
 import { Node, Distance } from '../index';
 
 export const node: Node = {
-    id: '2.3',
+    id: '2.1',
     // You stand at the...
-    name: 'farm',
-    data: {
-        scavenged: false
-    },
+    name: 'hill viewpoint',
+    data: {},
     function: main,
     interaction: interact,
     paths: {
         north: {
+            id: '3.2',
+            distance: 2
+        },
+        east: {
             id: undefined,
             distance: undefined
         },
-        east: {
-            id: '2.4',
-            distance: 1
-        },
         west: {
-            id: '2.2',
-            distance: 1
+            id: undefined,
+            distance: undefined
         }
     }
 };

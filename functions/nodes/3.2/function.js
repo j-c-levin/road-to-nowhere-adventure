@@ -4,9 +4,9 @@ const index_1 = require("./../index");
 function main(requestingNode) {
     const response = {
         // You stand at the [place], ...
-        description: 'abandoned to the elements. The keys are in the ignition but nothing responds when they are turned.',
+        description: `where life continue nonetheless.`,
         // To the north, ...
-        observableDescription: 'some kind of vehicle stands apart.'
+        observableDescription: 'signs of life above a collection of tents.'
     };
     return response;
 }

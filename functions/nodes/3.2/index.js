@@ -2,9 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const function_1 = require("./function");
 exports.node = {
-    id: '2.2',
+    id: '3.2',
     // You stand at the...
-    name: 'dam',
+    name: 'small settlement',
     data: {},
     function: function_1.main,
     interaction: function_1.interact,
@@ -14,8 +14,8 @@ exports.node = {
             distance: undefined
         },
         east: {
-            id: '2.3',
-            distance: 1
+            id: undefined,
+            distance: undefined
         },
         west: {
             id: undefined,
