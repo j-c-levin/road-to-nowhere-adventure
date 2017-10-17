@@ -36,3 +36,7 @@ function interact(interaction) {
     return response;
 }
 exports.interact = interact;
+function resetState(requestingNode) {
+    requestingNode.data.scavenged = false;
+}
+exports.resetState = resetState;

@@ -46,3 +46,7 @@ export function interact(interaction: InteractionData): InteractionResponse {
     }
     return response;
 }
+
+export function resetState(requestingNode: Node): void {
+    // Intentionally empty
+}

@@ -8,6 +8,7 @@ exports.node = {
     data: {},
     function: function_1.main,
     interaction: function_1.interact,
+    reset: function_1.resetState,
     paths: {
         north: {
             id: '3.2',

@@ -15,3 +15,7 @@ function interact(interaction) {
     return index_1.DefaultInteraction;
 }
 exports.interact = interact;
+function resetState(requestingNode) {
+    // Intentionally empty
+}
+exports.resetState = resetState;

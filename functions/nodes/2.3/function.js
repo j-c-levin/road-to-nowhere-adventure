@@ -45,3 +45,7 @@ function interact(interaction) {
     return response;
 }
 exports.interact = interact;
+function resetState(requestingNode) {
+    // Intentionally empty
+}
+exports.resetState = resetState;

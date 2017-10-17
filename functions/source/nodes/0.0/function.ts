@@ -1,4 +1,4 @@
-import { NodeData, Interaction, InteractionType, InteractionResponse, DefaultInteraction, InteractionData } from './../index';
+import { Node, NodeData, Interaction, InteractionType, InteractionResponse, DefaultInteraction, InteractionData } from './../index';
 
 export function main(): NodeData {
     const response = {
@@ -10,4 +10,8 @@ export function main(): NodeData {
 
 export function interact(Interaction: InteractionData): InteractionResponse {
     return DefaultInteraction;
+}
+
+export function resetState(requestingNode: Node): void {
+    // Intentionally empty
 }

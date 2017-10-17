@@ -70,3 +70,7 @@ function buildDam(interaction: InteractionData): string {
         return 'You have nothing to repair the dam with';
     }
 }
+
+export function resetState(requestingNode: Node): void {
+    // Intentionally empty
+}

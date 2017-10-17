@@ -72,3 +72,7 @@ function buildDam(interaction) {
         return 'You have nothing to repair the dam with';
     }
 }
+function resetState(requestingNode) {
+    // Intentionally empty
+}
+exports.resetState = resetState;

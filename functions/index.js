@@ -12,7 +12,7 @@ const player = {
     food: 2,
     tools: []
 };
-const startingNode = '2.1';
+const startingNode = '0.0';
 let currentNode;
 const getRandomValue = array => array[Math.floor(Math.random() * array.length)];
 const unhandledDeepLinks = app => {
@@ -50,9 +50,18 @@ const generatePlayerStatus = () => {
     message += '.';
     return message;
 };
-const begin = (app) => {
+const resetPlayer = () => {
     player.food = 2;
     player.tools = [];
+};
+const resetNodes = () => {
+    index_1.nodes.forEach((node) => {
+        node.reset(node);
+    });
+};
+const begin = (app) => {
+    resetPlayer();
+    resetNodes();
     currentNode = index_1.GetRemoteNode(startingNode);
     let message = `\nYour journey begins.\n`;
     message += locationMessage();
@@ -108,7 +117,6 @@ const handleInteraction = (app) => {
         requestingNode: currentNode,
         player: p
     };
-    console.log('interaction data', interactionData);
     const interactionResponse = currentNode.interaction(interactionData);
     // Augment the player with whatever the interaction achieved
     Object.keys(interactionResponse.data).forEach((element) => {

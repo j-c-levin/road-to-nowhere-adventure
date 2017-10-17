@@ -27,3 +27,7 @@ const generateObservableDescription = (requestingNode: Node): string => {
 export function interact(Interaction: InteractionData): InteractionResponse {
     return DefaultInteraction;
 }
+
+export function resetState(requestingNode: Node): void {
+    // Intentionally empty
+}

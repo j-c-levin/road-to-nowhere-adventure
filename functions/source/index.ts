@@ -23,7 +23,7 @@ const player: Player = {
     tools: []
 };
 
-const startingNode = '2.1';
+const startingNode = '0.0';
 let currentNode: Node;
 
 const getRandomValue = array => array[Math.floor(Math.random() * array.length)];
@@ -67,9 +67,20 @@ const generatePlayerStatus = (): string => {
     return message;
 };
 
-const begin = (app): void => {
+const resetPlayer = (): void => {
     player.food = 2;
     player.tools = [];
+};
+
+const resetNodes = (): void => {
+    nodes.forEach((node) => {
+        node.reset(node);
+    });
+};
+
+const begin = (app): void => {
+    resetPlayer();
+    resetNodes();
     currentNode = GetRemoteNode(startingNode);
     let message = `\nYour journey begins.\n`;
     message += locationMessage();
@@ -129,7 +140,6 @@ const handleInteraction = (app): void => {
         requestingNode: currentNode,
         player: p
     };
-    console.log('interaction data', interactionData);
     const interactionResponse = currentNode.interaction(interactionData);
     // Augment the player with whatever the interaction achieved
     Object.keys(interactionResponse.data).forEach((element) => {

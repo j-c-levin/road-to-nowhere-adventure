@@ -37,3 +37,7 @@ export function interact(interaction: InteractionData): InteractionResponse {
     }
     return response;
 }
+
+export function resetState(requestingNode: Node): void {
+    requestingNode.data.scavenged = false;
+}

@@ -14,3 +14,7 @@ export function main(requestingNode: Node): NodeData {
 export function interact(interaction: InteractionData): InteractionResponse {
     return DefaultInteraction;
 }
+
+export function resetState(requestingNode: Node): void {
+    // Intentionally empty
+}

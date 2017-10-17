@@ -40,6 +40,7 @@ export interface Node {
     data: any;
     function(requestingNode: Node): NodeData;
     interaction(interaction: InteractionData): InteractionResponse;
+    reset(requestingNode: Node): void;
     paths: Paths;
 }
 

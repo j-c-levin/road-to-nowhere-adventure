@@ -1,4 +1,4 @@
-import { main, interact } from './function';
+import { main, interact, resetState } from './function';
 import { Node, Distance } from '../index';
 
 export const node: Node = {
@@ -10,6 +10,7 @@ export const node: Node = {
     },
     function: main,
     interaction: interact,
+    reset: resetState,
     paths: {
         north: {
             id: undefined,
